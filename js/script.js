@@ -1,9 +1,25 @@
 document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
-    
-    // Simulação de envio (pode ser substituído por integração real)
-    alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
-    this.reset();
+
+    const form = this;
+    const data = new FormData(form);
+
+    fetch(form.action, {
+        method: 'POST',
+        body: data
+    })
+    .then(response => response.json())
+    .then(result => {
+        if (result.result === 'success') {
+            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
+            form.reset();
+        } else {
+            alert('Ocorreu um erro ao enviar a mensagem. Tente novamente.');
+        }
+    })
+    .catch(error => {
+        alert('Erro: ' + error.message);
+    });
 });
 
 // Smooth scroll para o botão CTA
