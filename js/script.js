@@ -2,11 +2,18 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
     const form = this;
-    const data = new FormData(form);
+    const data = {
+        Nome: form.querySelector('input[name="Nome"]').value,
+        Email: form.querySelector('input[name="Email"]').value,
+        Mensagem: form.querySelector('textarea[name="Mensagem"]').value
+    };
 
     fetch(form.action, {
         method: 'POST',
-        body: data
+        body: JSON.stringify(data),
+        headers: {
+            'Content-Type': 'application/json'
+        }
     })
     .then(response => response.json())
     .then(result => {
@@ -18,6 +25,7 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
         }
     })
     .catch(error => {
+        console.error('Erro:', error);
         alert('Erro: ' + error.message);
     });
 });
