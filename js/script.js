@@ -2,32 +2,27 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
     e.preventDefault();
 
     const form = this;
-    const data = {
-        Nome: form.querySelector('input[name="Nome"]').value,
-        Email: form.querySelector('input[name="Email"]').value,
-        Mensagem: form.querySelector('textarea[name="Mensagem"]').value
-    };
+    const nome = form.querySelector('input[name="Nome"]').value;
+    const email = form.querySelector('input[name="Email"]').value;
+    const mensagem = form.querySelector('textarea[name="Mensagem"]').value;
 
-    fetch(form.action, {
-        method: 'POST',
-        body: JSON.stringify(data),
-        headers: {
-            'Content-Type': 'application/json'
-        }
-    })
-    .then(response => response.json())
-    .then(result => {
-        if (result.result === 'success') {
-            alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
-            form.reset();
-        } else {
-            alert('Ocorreu um erro ao enviar a mensagem: ' + result.error);
-        }
-    })
-    .catch(error => {
-        console.error('Erro:', error);
-        alert('Erro ao enviar a mensagem: ' + error.message);
-    });
+    // Mensagem que será enviada ao seu WhatsApp
+    const whatsappMessage = `Olá, Jhonatan! Nova mensagem de contato do site Consultoria Tech:\n\n` +
+                           `Nome: ${nome}\n` +
+                           `Email: ${email}\n` +
+                           `Mensagem: ${mensagem}`;
+
+    // URL do WhatsApp com o número e a mensagem codificada
+    const whatsappUrl = `https://wa.me/5567996214608?text=${encodeURIComponent(whatsappMessage)}`;
+
+    // Abre o WhatsApp no celular do usuário
+    window.open(whatsappUrl, '_blank');
+
+    // Exibe uma mensagem de confirmação no navegador
+    alert('Obrigado por entrar em contato com a Consultoria Tech! Sua mensagem foi enviada com sucesso. Em breve, Jhonatan responderá pelo WhatsApp.');
+    
+    // Limpa o formulário
+    form.reset();
 });
 
 // Smooth scroll para o botão CTA
