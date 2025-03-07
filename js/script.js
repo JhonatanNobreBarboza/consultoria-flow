@@ -21,12 +21,12 @@ document.getElementById('contact-form').addEventListener('submit', function(e) {
             alert('Mensagem enviada com sucesso! Entraremos em contato em breve.');
             form.reset();
         } else {
-            alert('Ocorreu um erro ao enviar a mensagem. Tente novamente.');
+            alert('Ocorreu um erro ao enviar a mensagem: ' + result.error);
         }
     })
     .catch(error => {
         console.error('Erro:', error);
-        alert('Erro: ' + error.message);
+        alert('Erro ao enviar a mensagem: ' + error.message);
     });
 });
 

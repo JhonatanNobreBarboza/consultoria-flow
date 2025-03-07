@@ -7,7 +7,6 @@ module.exports = async (req, res) => {
         body: JSON.stringify(req.body),
         headers: {
           'Content-Type': 'application/json',
-          // Se necessário, adicione autenticação aqui (veja nota abaixo)
         },
       });
       const data = await response.json();
