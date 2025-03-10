@@ -8,7 +8,7 @@ body {
     line-height: 1.6;
     color: #333;
     background-color: #f5f5f5;
-    font-family: 'Open Sans', sans-serif; /* Fonte secundária para textos gerais */
+    font-family: 'Open Sans', sans-serif;
     font-weight: 400;
 }
 
@@ -19,11 +19,14 @@ header {
     padding: 4rem 2rem;
     text-align: center;
 }
+strong{
+    font-size: 12px;
+}
 
 header h1 {
     font-family: 'Poppins', sans-serif;
     font-weight: 700;
-    font-size: 3rem; /* Aumentado para maior impacto */
+    font-size: 3rem;
     margin-bottom: 1rem;
     letter-spacing: 1px;
 }
@@ -191,7 +194,7 @@ header p {
 }
 
 .timeline-toggle.active {
-    max-height: 100px;
+    max-height: 3000px; /* Aumentado para cobrir todo o conteúdo */
 }
 
 /* Linha do Tempo Horizontal (Períodos) */
@@ -258,14 +261,14 @@ header p {
 .timeline-period-content {
     display: none;
     position: relative;
+    min-height: 100px;
 }
 
 .timeline-period-content.active {
     display: block;
-    max-height: 2000px;
-    transition: max-height 0.6s ease-in-out;
 }
 
+/* Linha Vertical */
 .timeline-period-content::after {
     content: '';
     position: absolute;
@@ -274,8 +277,10 @@ header p {
     top: 0;
     left: 50%;
     transform: translateX(-50%);
-    height: var(--line-height, 0);
-    transition: height 0.5s ease;
+    height: 0; /* Começa com altura 0 */
+    height: var(--line-height, 0); /* Controlado pelo JavaScript */
+    transition: height 0.8s ease; /* Transição suave */
+    z-index: 1; /* Ajustado para garantir que a linha fique visível */
 }
 
 .timeline-item {
@@ -309,6 +314,7 @@ header p {
     position: relative;
     box-shadow: 0 4px 6px rgba(0,0,0,0.1);
     transition: transform 0.3s;
+    z-index: 2; /* Garante que o conteúdo fique acima da linha */
 }
 
 .timeline-content:hover {
@@ -338,6 +344,26 @@ header p {
     margin-top: 0.5rem;
     font-weight: 600;
     font-family: 'Poppins', sans-serif;
+}
+
+.timeline-item::before {
+    content: '';
+    position: absolute;
+    width: 20px;
+    height: 20px;
+    background-color: #e74c3c;
+    border-radius: 50%;
+    top: 50%;
+    transform: translateY(-50%);
+    z-index: 3; /* Garante que o ponto fique acima da linha */
+}
+
+.timeline-item:nth-child(odd)::before {
+    right: -10px;
+}
+
+.timeline-item:nth-child(even)::before {
+    left: -10px;
 }
 
 /* Sobre */
@@ -807,8 +833,10 @@ footer p {
         padding: 0.5rem 0;
         font-size: 1rem;
     }
+    /* Ajuste na linha vertical para telas menores */
     .timeline-period-content::after {
         left: 20px;
+        transform: none;
     }
     .timeline-item {
         width: 100%;
